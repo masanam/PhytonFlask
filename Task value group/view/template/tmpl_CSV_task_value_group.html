@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang=''>
+<head>
+   <meta charset='utf-8'>
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+   <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+   <script src="{{ url_for('static', filename='script.js') }}"></script>
+   <title>Automation with Flask MVC</title>
+</head>
+<body>
+
+   <div class="row">
+      <div class="column">
+        {% include 'menu.html' %}
+      </div>
+      <div class="column-right">
+
+        <form method ="post" enctype="multipart/form-data" id="main_form" action="{{ url_for(' CSV_task_value_group.view_ CSVsk_value_group') }}">
+
+            
+            <div align="left">
+                Task Value Group
+            </div><br>
+
+            <div align ="right">
+                <input type="submit" value="New task value group" name="Btn_new_task_value_group"/> 
+                <input type="submit" value="Delete task value group" name="Btn_import_from_CSV" /> 
+            </div>  <br/>
+            <div align="center">
+                <input type="text" name="search_task_value_group" id="task_value_group_search" value="" size="40" autocomplete="off"/>
+                <input type="submit" value="Search task value group" name="Btn_search"/><br/><br/> 
+                 
+				<input type="text" name="search_task_value_count" id="task_value_count_search" value="" size="40" autocomplete="off"/>
+                <input type="submit" value="Search task value" name="Btn_search2"/><br/><br/>  
+
+    
+			</div> <br/>
+
+            <div id="filter_count" align="center">
+                <label for="Total-rows">Total rows: </label><br>     
+            </div> <br>
+
+            <div align="center">
+                Limit rows: <input type="text" name="Limit_rows" value="" size="10" />
+                Start after row: <input type="text" name="Start_after_row" value="" size="10" /> 
+                <input type="submit" value="Get row" name="Btn_get_row"/>
+            </div>  <br/>   
+
+            <input type="submit" value="Add a task value group to a task function of abot task template" name="Btn_search"/><br/><br/>  
+
+            <table align="right" width ="1000" border = "1" cellspacing ="1" id="search_table" class="scrollmenu">
+
+                <tr>
+                    <th align ="center" width ="1%"> <input type="checkbox" value="" id="checkAll"/> </th>   
+              
+                    <th align="center" bgcolor="whitesmoke"> Task value group </th> 
+					<th align="center" bgcolor="whitesmoke"> Task value count  </th> 	 
+                    <th align="center" bgcolor="whitesmoke"> Created date time  </th>  
+                    <th align="center" bgcolor="whitesmoke"> Edit  </th>  
+                </tr>
+            </table>
+        </div>	<br><br>
+        
+           
+    </form>
+</div>
+</div> 
+
+
+
+</body>
+<html>

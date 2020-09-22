@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang=''>
+<head>
+   <meta charset='utf-8'>
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+   <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+   <script src="{{ url_for('static', filename='script.js') }}"></script>
+   <title>Automation with Flask MVC</title>
+</head>
+<body>
+
+   <div class="row">
+      <div class="column">
+        {% include 'menu.html' %}
+      </div>
+      <div class="column-right">
+
+        <form method ="post" enctype="multipart/form-data" id="main_form" action="{{ url_for('CSV_log.view_CSV_log') }}">
+            <div align ="right">
+                <input type="submit" value="Delete" name="Btn_delete"/> 
+                <input type="submit" value="Save & close" name="Btn_save"/> 
+                <input type="submit" value="Back" name="Btn_cancel" /> 
+            </div>  
+			
+			<div align="left">
+                New bot task group - Import from CSV
+            </div><br>
+			
+            <div style="border:1px solid black;">
+                Notes:<br/>
+                Only 1 CSV file can be read & imported at a time.<br/>
+				To get file path, 'click on the file' + 'hold SHIFT key' + 'right mouse click', then select 'Copy as path' <br/>
+				File path must be surrounded with double quotes, see example below:  <br/>
+				"C:/Users/Shane Fang/Desktop/Automation Systems 2020/Auto Sys - Simplified/test.csv" <br/>
+               
+            </div>
+            <br/>
+           
+
+            <div>
+               Name &nbsp; <input type="text" name="Scene_name" value="" size="60"/> <br/> <br/>
+
+               Description &nbsp; <textarea cols="60" name="description"> </textarea>
+
+            </div> <br><br>
+
+            <div>
+                CSV file path &nbsp; <input type="text" name="CSV_file_name" id="CSV_file_name" value="" size="60" />
+                <input type="submit" value="Read & import from CSV" id="Btn_read_CSV" name="Btn_read_CSV" />
+
+            </div> <br/><br/>
+         
+                <div>
+                    <input type="text" name="Input_bot_task_group_template" id="Search_box" value="" autocomplete="off" size="40"/>
+                    <input type="submit" value="Search bot task group template" name="Btn_search"  /> <br/><br/> 
+                    
+					<input type="text" name="Input_bot_task_group" id="Search_box1" value="" autocomplete="off" size="40" />
+                    <input type="submit" value="Search bot task group" name="Btn_search1"  /> <br/><br/> 
+                 
+				     <input type="text" name="Input_SN" id="Search_box2" value="" autocomplete="off" size="40" />
+                    <input type="submit" value="Search SN" name="Btn_search2"  /> <br/><br/> 
+ 
+                <div id="filter_count" align="left">
+                     <label for="Total-rows">Total rows: </label><br>      
+                </div> <br>
+
+                <div>
+                    Limit rows: <input type="text" name="Limit_rows" value="" size="10" />
+                    Start after row: <input type="text" name="Start_after_row" value="" size="10" /> 
+                    <input type="submit" value="Get row" name="Btn_get_row"   />
+                </div> <br/>
+
+				<div>
+				<div class="scrollmenu">
+                    <table border = "1" cellspacing ="1" id="CSV_table" class="small_table">
+
+                        <tr>                           
+                            <th align="center" bgcolor="whitesmoke"> CSV file name </th> 
+							<th align="center" bgcolor="whitesmoke"> CSV file rows  </th> 
+                        </tr> 	
+                        </table>
+				</div> <br> <br> 
+				 
+                <div class="scrollmenu">  
+                    <table border = "1" cellspacing ="1" id="search_table" class="scrollmenu">
+
+                        <tr>
+                            <th align ="center" width ="1%"> <input type="checkbox" id="checkAll" name ="checkbox[]" /> </th>   
+                           <!-- <th align="center" bgcolor="whitesmoke"> Query folder name </th> -->
+                            <th align="center" bgcolor="whitesmoke"> Bot task group template </th> 
+                            <th align="center" bgcolor="whitesmoke"> Bot task group  </th>  
+							<th align="center" bgcolor="whitesmoke"> SN  </th> 
+							<th align="center" bgcolor="whitesmoke"> Bot task count  </th> 
+                            <th align="center" bgcolor="whitesmoke"> Created date time  </th> 
+                            <th align="center" bgcolor="whitesmoke"> Modified date time </th> 
+                               
+                        </tr>
+						</table>
+				</div>	<br><br>
+            
+               
+           </form>
+      </div>
+    </div> 
+
+
+
+</body>
+<html>

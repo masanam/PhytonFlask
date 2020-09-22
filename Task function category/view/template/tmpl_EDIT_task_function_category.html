@@ -1,0 +1,51 @@
+<html>
+
+    <head> 
+        <title>Task function category</title>
+		
+        <style type="text/css">
+            table.scrollmenu {
+                overflow: auto;
+                white-space: nowrap;
+            }
+        </style>
+		
+    </head>    
+
+    <body>
+
+        <form method ="post" action="../Controller/controller_csv_file.php">
+
+            Task function category 
+
+            <div align ="right">
+                <input type="submit" value="New task function category" name="Btn_new_task_function_category"/> 
+                <input type="submit" value="Delete" name="Btn_delete" /> 
+                <input type="submit" value="Import from CSV" name="Btn_import_from_CSV" /> 
+            </div>  <br/>
+            <div align="center">
+                <input type="text" name="search_task_function_category" id="task_function_category_search" value="" size="40" autocomplete="off"/>
+                <input type="submit" value="Search task function category" name="Btn_search" form action="{{ python code goes here }}"/><br/><br/> 
+                			
+			</div> <br/>
+
+            <div id="filter_count" align="center">
+                <label for="Total-rows">Total rows: </label><br>     
+            </div> <br>
+
+            <div align="center">
+                Limit rows: <input type="text" name="Limit_rows" value="" size="10" />
+                Start after row: <input type="text" name="Start_after_row" value="" size="10" /> 
+                <input type="submit" value="Get row" name="Btn_get_row" form action= "../View/view_csv_file.php"/>
+            </div>  <br/>   
+
+            <table align="right" width ="1000" border = "1" cellspacing ="1" id="search_table" class="scrollmenu">
+
+                <tr>
+                    <th align ="center" width ="1%"> <input type="checkbox" value="" id="checkAll"/> </th>   
+              
+                    <th align="center" bgcolor="whitesmoke"> Task function category </th> 
+                    <th align="center" bgcolor="whitesmoke"> Created date time  </th>  
+                    <th align="center" bgcolor="whitesmoke"> Modified date time  </th> 
+                    <th align="center" bgcolor="whitesmoke"> Edit  </th>  
+                </tr>

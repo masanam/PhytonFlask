@@ -1,0 +1,107 @@
+<html>
+
+
+    <head> 
+        <title>tmpl CSV task value</title>
+        <style type="text/css">
+            table.scrollmenu {
+                overflow: auto;
+                white-space: nowrap;
+            }
+        </style>
+    </head>    
+
+    <body>
+
+        <form method ="post" enctype="multipart/form-data" id="main_form" action="{{ url_for('EDIT_task_value.view_EDIT_task_value') }}">
+            <div align ="right">
+                <input type="submit" value="Delete" name="Btn_delete"/> 
+                <input type="submit" value="Save & close" name="Btn_save"/> 
+                <input type="submit" value="Back" name="Btn_cancel" /> 
+            </div>  
+			
+			<div align="left">
+                New task value - Import from CSV
+            </div><br>
+			
+            <div style="border:1px solid black;">
+                Notes:<br/>
+                Only 1 CSV file can be read & imported at a time.<br/>
+				To get file path, 'click on the file' + 'hold SHIFT key' + 'right mouse click', then select 'Copy as path' <br/>
+				File path must be surrounded with double quotes, see example below:  <br/>
+				"C:/Users/Shane Fang/Desktop/Automation Systems 2020/Auto Sys - Simplified/test.csv" <br/>
+               
+            </div>
+            <br/>
+           
+
+            <div>
+               Name &nbsp; <input type="text" name="Scene_name" value="" size="60"/> <br/> <br/>
+
+               Description &nbsp; <textarea cols="60" name="description"> </textarea>
+
+            </div> <br><br>
+
+            <div>
+                CSV file path &nbsp; <input type="text" name="CSV_file_name" id="CSV_file_name" value="" size="60" />
+                <input type="submit" value="Read & import from CSV" id="Btn_read_CSV" name="Btn_read_CSV" />
+
+            </div> <br/><br/>
+         
+                <div>
+                    <input type="text" name="Input_scene_category" id="Search_box" value="" autocomplete="off" size="40"/>
+                    <input type="submit" value="Search scene category" name="Btn_search" /> <br/><br/> 
+                    
+					<input type="text" name="Input_scene" id="Search_box1" value="" autocomplete="off" size="40" />
+                    <input type="submit" value="Search scene" name="Btn_search1" /> <br/><br/> 
+                 
+				    <input type="text" name="Input_task_value_type" id="Search_box2" value="" autocomplete="off" size="40" />
+                    <input type="submit" value="Search task value type" name="Btn_search2" /> <br/><br/> 
+                 
+				    <input type="text" name="Input_task_value_name" id="Search_box3" value="" autocomplete="off" size="40" />
+                    <input type="submit" value="Search task value name" name="Btn_search3" /> <br/><br/> 
+                 
+				    <input type="text" name="Input_task_value_content" id="Search_box4" value="" autocomplete="off" size="40" />
+                    <input type="submit" value="Search task value content" name="Btn_search4" /> <br/><br/> 
+                 
+				 
+				 
+                <div id="filter_count" align="left">
+                     <label for="Total-rows">Total rows: </label><br>      
+                </div> <br>
+
+                <div>
+                    Limit rows: <input type="text" name="Limit_rows" value="" size="10" />
+                    Start after row: <input type="text" name="Start_after_row" value="" size="10" /> 
+                    <input type="submit" value="Get row" name="Btn_get_row"  />
+                </div> <br/>
+
+				<div>
+				<div class="scrollmenu">
+                    <table border = "1" cellspacing ="1" id="CSV_table" class="small_table">
+
+                        <tr>                           
+                            <th align="center" bgcolor="whitesmoke"> CSV file name </th> 
+							<th align="center" bgcolor="whitesmoke"> CSV file rows  </th> 
+						</tr> 	
+				</div> <br> <br> 
+				 
+                <div class="scrollmenu">  
+                    <table border = "1" cellspacing ="1" id="search_table" class="scrollmenu">
+
+                        <tr>
+                            <th align ="center" width ="1%"> <input type="checkbox" id="checkAll" name ="checkbox[]" /> </th>   
+                           <!-- <th align="center" bgcolor="whitesmoke"> Query folder name </th> -->
+                            <th align="center" bgcolor="whitesmoke"> Scene category </th> 
+                            <th align="center" bgcolor="whitesmoke"> Scene  </th>  
+							 <th align="center" bgcolor="whitesmoke"> Task value group</th> 
+                            <th align="center" bgcolor="whitesmoke"> Task value type  </th>  
+							<th align="center" bgcolor="whitesmoke"> Task value name</th> 
+                            <th align="center" bgcolor="whitesmoke"> Task value content  </th>  
+							
+                            <th align="center" bgcolor="whitesmoke"> Created date time  </th> 
+                            <th align="center" bgcolor="whitesmoke"> Edit </th> 
+                               
+                        </tr>
+						
+				</div>	<br><br>	

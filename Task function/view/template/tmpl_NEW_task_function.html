@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang=''>
+<head>
+   <meta charset='utf-8'>
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+   <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+   <script src="{{ url_for('static', filename='script.js') }}"></script>
+   <title>Automation with Flask MVC</title>
+</head>
+<body>
+
+   <div class="row">
+      <div class="column">
+        {% include 'menu.html' %}
+      </div>
+      <div class="column-right">
+
+        <form method ="POST" action="{{ url_for( 'NEW_task_function.view_NEW_task_function') }}" enctype="multipart/form-data" id="main_form">
+            <div align ="right">
+                <input type="submit" value="Save & close" name="Btn_save" /> 
+                <input type="button" value="Cancel" name="Btn_cancel" onclick="window.location.href='{{ url_for( 'NEW_bot_task_template.view_NEW_bot_task_template') }}';"/> 
+            </div>  
+			
+			<div align="left">
+                New Task function 
+            </div><br>
+			
+
+           
+            <div>
+               <label>Task function :</label><input type="text" name="task_function_name" id="task_function_name" value="{{ task_function_name }}" size="60"/>
+               <input type="hidden" name="task_function_id" id="task_function_id" value="{{ task_function_id }}" size="60"/>
+               <input type="button" value="Find task function" name="Btn_find" onclick="window.location.href='/view_SELECT_task_function';"/> <br/>
+               <label>Scene Category :</label>
+                    <select id="scene_category_id1" name="scene_category_id1">
+                        {% for row in listdataSC %}
+                            <option value="{{ row.0 }}">{{ row.1 }}</option>
+                        {% endfor %}
+                    </select><br/>
+               <label>Scene :</label>
+               <select id="scene_id1" name="scene_id1" onchange="getval(this);">
+                            {% for row in listdataS %}
+                                <option value="{{ row.0 }}">{{ row.1 }}</option>
+                            {% endfor %}
+                        </select><br/>  
+                <label>Task value type : </label><input type="text" name="task_value_type_name" id="task_value_type_name" value="{{ task_value_type_name }}" size="60"/>
+                <input type="hidden" name="task_value_type_id" id="task_value_type_id" value="{{ task_value_type_id }}" size="60"/>
+                <input type="button" value="Find task value type" name="Btn_find1" id="Btn_find1" onclick="window.location.href='/view_SELECT_task_value_type?task_function_id={{ task_function_id }}&task_function_name={{ task_function_name }}&scene_category_id={{ scene_category_id }}&scene_id={{ scene_id }}';"/> <br/>
+
+                <label>Task value group :</label><input type="text" name="task_value_group_name" id="task_value_group_name" value="{{ task_value_group_name }}" size="60"/>
+                <input type="hidden" name="task_value_group_id" id="task_value_group_id" value="{{ task_value_group_id }}" size="60"/>
+                <input type="button" value="Find task value group" name="Btn_find2" id="Btn_find2" onclick="window.location.href='/view_SELECT_task_value_group?task_function_id={{ task_function_id }}&task_function_name={{ task_function_name }}&task_value_type_id={{ task_value_type_id }}&task_value_type_name={{ task_value_type_name }}&scene_category_id={{ scene_category_id }}&scene_id={{ scene_id }}';"/> <br/>
+                <label>Task value count : </label><input type="text" name="task_value_count" id="task_value_count" value="{{ task_value_group_count }}" size="60"/> <br/>
+                <div style="float:left;display:block;width:100%;">
+                    <label>Unique value per  task: </label>
+                    <input type="radio" name="options" id="option1" value="1" checked="checked"> Yes </input><br>
+                    <input type="radio" name="options" id="option2" value="0"> No  </input><br>
+                <br/>
+                </div>
+                
+
+               <label>Comment</label><textarea cols="45" name="comment" id="comment"> </textarea>
+
+            </div> <br>
+            <input type="hidden" name="scene_category_id" id="scene_category_id" value="{{ scene_category_id }}" size="60"/>
+            <input type="hidden" name="scene_id" id="scene_id" value="{{ scene_id }}" size="60"/>
+
+            <input type="hidden" name="scene_category" id="scene_category" value="" size="60"/>
+            <input type="hidden" name="scene" id="scene" value="" size="60"/>
+
+            </form>
+        </div>
+      </div> 
+  
+      <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+      <script>
+            $(document).ready(function() {
+              $('#scene_category_id1').change(function() {
+                var category = $('#scene_category_id1').val();
+                var scene = $('#scene_id1').val();
+                var task_function_id =  $('#task_function_id').val();
+                var task_function_name =  $('#task_function_name').val();
+                var task_value_type_id =  $('#task_value_type_id').val();
+
+                document.getElementById("scene_category").value = category;
+                document.getElementById("scene_category_id").value = category;
+                document.getElementById("scene_id").value =  scene;
+                document.getElementById("scene").value =  scene;
+
+                var task_function_id =  $('#task_function_id').val();
+                document.getElementById("Btn_find1").setAttribute("onclick", "window.location.href='/view_SELECT_task_value_type?task_function_id="+task_function_id+"&task_function_name="+task_function_name+"&scene_category_id="+category+"&scene_id="+scene+"';");
+                document.getElementById("Btn_find2").setAttribute("onclick", "window.location.href='/view_SELECT_task_value_type?task_function_id="+task_function_id+"&task_function_name="+task_function_name+"&scene_category_id="+category+"&scene_id="+scene+"&task_value_type_id="+task_value_type_id+"&task_value_type_name="+task_value_type_name+"';");
+
+                // Make Ajax Request and expect JSON-encoded data
+
+                $.ajax({
+                        url: '/scene_NEW_task_function',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: { 'category' : category }, /* you are passing categoryr_id*/
+                        success: function(data){
+                            $("#scene_id1").empty();
+                            var output = "";
+                            $.each(data, function(a,b){
+                                output += "<option value="+b[0]+">"+b[1]+"</option>";
+                            })
+                            $("#scene_id1").append(output);
+                        }
+                    });
+
+
+              });
+
+
+            });
+
+            function getval(sel)
+                {
+                    var category = $('#scene_category_id1').val();
+                    var scene = $('#scene_id1').val();
+                    var task_function_id =  $('#task_function_id').val();
+                    var task_function_name =  $('#task_function_name').val();
+                    var task_value_type_id =  $('#task_value_type_id').val();
+
+                        document.getElementById("Btn_find1").setAttribute("onclick", "window.location.href='/view_SELECT_task_value_type?task_function_id="+task_function_id+"&task_function_name="+task_function_name+"&scene_category_id="+category+"&scene_id="+scene+"';");
+                        document.getElementById("Btn_find2").setAttribute("onclick", "window.location.href='/view_SELECT_task_value_type?task_function_id="+task_function_id+"&task_function_name="+task_function_name+"&scene_category_id="+category+"&scene_id="+scene+"&task_value_type_id="+task_value_type_id+"&task_value_type_name="+task_value_type_name+"';");
+                        document.getElementById("scene").value = sel.value;
+                        document.getElementById("scene_id").value = sel.value;
+                    }
+          </script>
+  
+  </body>
+  <html>

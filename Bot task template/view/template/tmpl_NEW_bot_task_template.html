@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang=''>
+<head>
+   <meta charset='utf-8'>
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+   <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+   <script src="{{ url_for('static', filename='script.js') }}"></script>
+   <title>Automation with Flask MVC</title>
+</head>
+<body>
+
+   <div class="row">
+      <div class="column">
+        {% include 'menu.html' %}
+      </div>
+      <div class="column-right">
+
+        <form method ="post" action="{{ url_for( 'NEW_bot_task_template.view_NEW_bot_task_template') }}" enctype="multipart/form-data" id="main_form">
+            <div align ="right">
+                <input type="submit" value="Unique task value per task" name="Btn_task" />  
+                <input type="submit" value="Save & close" name="Btn_save" /> 
+                <input type="button" value="Cancel" name="Btn_cancel" onclick="window.location.href='{{ url_for( 'LIST_bot_task_template.view_LIST_bot_task_template') }}';"/> 
+            </div>  
+			
+			<div align="left">
+                New Bot task template
+            </div><br>
+           
+
+            <div>
+               Name <br/><input type="text" name="name" id="name" value="" size="60"/> <br/>
+
+               Bot User Group<br/>
+               <select id="group_user" name="group_user" onchange="getval(this);">
+                   {% for row in list_group %}
+                       <option value="{{ row.0 }}">{{ row.1 }}</option>
+                   {% endfor %}
+               </select><br/>
+
+            
+               Description<br/><textarea cols="45" name="description" id="description"> </textarea>
+
+            </div> <br/>
+
+        
+            <div>
+                <input type="button" value="New task function" name="Btn_new" onclick="window.location.href='{{ url_for( 'NEW_task_function.view_NEW_task_function') }}';"/> 
+                <input type="submit" value="Delete task function" name="Btn_delete" /> 
+                <input type="submit" value="Add function space" name="Btn_new1" /> 
+                <input type="submit" value="Delete function space" name="Btn_delete1" /> 
+                <input type="hidden" name="group_id" id="group_id" value="" size="60"/>
+
+            </div>  
+            <br/>
+                <div class="scrollmenu">  
+                    <table border = "1" cellspacing ="1" id="search_table" class="scrollmenu">
+
+                        <tr>
+                            <th align ="center" width ="1%"> <input type="checkbox" id="checkAll" name ="checkbox[]" /> </th>   
+                            <th align="center" bgcolor="whitesmoke"> Task function </th> 
+                            <th align="center" bgcolor="whitesmoke"> Scene category</th> 
+                            <th align="center" bgcolor="whitesmoke"> Scene </th> 
+                            <th align="center" bgcolor="whitesmoke"> Task value type </th> 
+                            <th align="center" bgcolor="whitesmoke"> Task value group</th> 
+                            <th align="center" bgcolor="whitesmoke"> Task value count </th> 
+                            <th align="center" bgcolor="whitesmoke"> Unique task value per task  </th> 
+                               
+                        </tr>
+                        {% for row in listdata %}
+
+                            {% if (row.14 == 1) %}
+                                <tr class="space">
+                            {% else %}
+                                <tr>
+                            {% endif %}
+
+                            <td><input type="checkbox" id="checkbox_{{row.0}}" name="checkbox" value="{{ row.0 }}"></td>  
+                            {% if (row.2) %}
+                                <td class="smoke"><a href="#">{{  row.2 if row.2 else '' }}</a></td> 
+                            {% else %}
+                                <td><a href="#">{{  row.2 if row.2 else '' }}</a></td> 
+                            {% endif %}
+                            <td>{{  row.18 if row.18 else '' }}</td>   
+                            <td>{{  row.17 if row.17 else '' }}</td>   
+                            <td>{{  row.19 if row.19 else '' }}</td>   
+                            {% if (row.10) %}
+                                <td class="smoke"><a href="#">{{  row.10 if row.10 else '' }}</a></td>   
+                            {% else %}
+                                <td><a href="#">{{  row.10 if row.10 else '' }}</a></td>   
+                            {% endif %}
+                            <td>{{  row.11 if row.11 else '' }}</td>   
+                            <!-- <td>{{  'No' if (row.12 == 0) else '' }}</td> -->
+                            <td>
+                                {% if (row.12 == 0 ) %}
+                                    {{  'No' }}
+                                {% elif (row.12 == 1 ) %}
+                                    {{  'Yes' }}
+                                {% else %}
+                                    {{  '' }}
+                                {% endif %}
+                            </td>   
+
+                               
+                        </tr>
+                        {% endfor %}
+						</table>
+						
+                </div>	
+            </form>
+        </div>
+      </div> 
+  
+  <script>
+              function getval(sel)
+                    {
+                        document.getElementById("group_id").value = sel.value;
+                    }
+  </script>
+  
+  </body>
+  <html>

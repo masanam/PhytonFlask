@@ -1,0 +1,53 @@
+
+html {
+    
+overflow: scroll;
+align: left;
+}
+
+
+ul {
+font-size: 5;
+list-style-type: none;
+padding: 0;
+margin: 10;
+
+}
+
+h1 {
+text-decoration: none;
+font-family: Georgia, Arial, Times, serif;
+font-size: 15px;
+background-color: white;
+color: black;     
+}
+
+
+ul li a {
+display: block;	
+text-decoration: none;
+font-family: Georgia, Arial, Times, serif;
+font-size: 15px;
+background-color: whitesmoke;
+color: black;
+width: 100px;
+margin-left: 50px;
+boarder: 1px solid red;
+boarder-radius: 2px;
+text-align: left;
+height: 20px;
+padding: 5px 20px;
+
+}
+
+ul li a:hover {   
+background-color: darkgray;  
+color: white;    
+}
+
+
+ul li a:focus {    
+background-color: red;  
+color: white;
+    
+}

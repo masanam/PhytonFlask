@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang=''>
+<head>
+   <meta charset='utf-8'>
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+   <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+   <script src="{{ url_for('static', filename='script.js') }}"></script>
+   <title>Automation with Flask MVC</title>
+</head>
+<body>
+
+   <div class="row">
+      <div class="column">
+        {% include 'menu.html' %}
+      </div>
+      <div class="column-right">
+
+        <form method ="POST" action="{{ url_for( 'SELECT_task_function.view_SELECT_task_function') }}" enctype="multipart/form-data" id="main_form">
+            <div align ="right">
+                <input type="submit" value="Save & close" name="Btn_Save" /> 
+                <input type="button" value="Cancel" name="Btn_cancel" onclick="window.location.href='{{ url_for( 'NEW_task_function.view_NEW_task_function') }}';"/> 
+            </div>  
+			
+			<div align="left">
+                Select Task function 
+            </div><br>
+			
+                <div>
+                        <input type="text" name="search" id="search"/>
+                        <input type="submit" value="Search task function category" name="Btn_search" /><br/><br/> 
+                        <input type="text" name="search1" id="search"/>
+                        <input type="submit" value="Search task function" name="Btn_search1" /><br/><br/> 
+                    </div> <br>
+
+                    <div style="margin:0 auto;text-align:center;width:200px;border:1px solid #666; padding:10px;">
+                        Total rows: {{ countdata }}     
+                    </div> 
+
+                <div>
+                    Limit rows: <input type="text" name="limit" id="limit" value="" size="10" />
+                    Start after row: <input type="text" name="start" id="start" value="" size="10" /> 
+                    <input type="submit" value="Get row" name="get_row" />
+                </div>  <br/>  
+				
+				 
+                <div class="scrollmenu">  
+                    <table border = "1" cellspacing ="1" id="search_table" class="scrollmenu">
+
+                        <tr>
+                            <th align ="center" width ="1%">  </th>   
+                            <th align="center" bgcolor="whitesmoke"> Task function category </th> 
+                            <th align="center" bgcolor="whitesmoke"> Task function </th>                   
+                            <th align="center" bgcolor="whitesmoke"> Task function content</th> 
+                            <th align="center" bgcolor="whitesmoke"> Created datetime  </th>  
+                            <th align="center" bgcolor="whitesmoke"> Modified datetime  </th> 
+                        </tr>
+                        {% for row in listdata %}
+                        <tr>
+                            <td>
+                            <input type="radio" name="task_function_id" id="task_function_id" value="{{ row.0 }}"> 
+                            </td>
+                            <td>{{ row.10 }}</td>   
+                            <td>{{ row.1 }}</td>   
+                            <td>{{ row.2 }}</td>   
+                            <td>{{ row.8 }}</td>   
+                            <td>{{ row.9 }}</td>   
+                        </tr>
+                        {% endfor %}
+						</table>
+						<input type="hidden" id="task_function_name" name="task_function_name" value="">
+                </div>	
+            </form>
+        </div>
+      </div> 
+  
+  <script>
+        $(document).on('change', ':radio[name="task_function_id"]', function () {
+            var datas = $(this).parent().nextAll().map(function () {
+                return $(this).text();
+            }).get();
+
+            document.getElementById("task_function_name").value = datas[1];
+        });
+  </script>
+  
+  </body>
+  <html>
